@@ -4,6 +4,7 @@ import BurgerIngredient from "./BurgerIngredients/BurgerIngredient";
 import { v4 as uuidv4 } from 'uuid';
 
 const Burger = (props) => {
+    console.log(props)
     let transformedIngredients = Object.keys(props.ingredients)
         .map(igKey => {
             return [...Array(props.ingredients[igKey])].map((_, i) => {
