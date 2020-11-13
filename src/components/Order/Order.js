@@ -3,7 +3,6 @@ import './Order.css';
 
 const Order = (props) => {
     const ingredients = [];
-    console.log(props)
     for (let ingredientName in props.ingredients) {
         console.log(ingredientName)
         ingredients.push(
