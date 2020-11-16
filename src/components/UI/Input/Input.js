@@ -3,11 +3,11 @@ import './Input.css'
 
 const Input = (props) => {
     let inputElement = null;
-    let validationError = null;
     const inputClasses = ['InputElement'];
+    let validationError = null;
 
-    if (props.invalid && props.touched) {
-        validationError = <p className='ValidationError'>Please enter a valid {props.valueType}</p>
+    if(props.invalid && props.touched) {
+        validationError = <p>Please enter a valid {props.valueType}</p>
     }
 
     switch (props.elementType) {
