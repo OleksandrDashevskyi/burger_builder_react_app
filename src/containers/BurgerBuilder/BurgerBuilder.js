@@ -5,27 +5,17 @@ import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
-import axios from '../../axios-orders';
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
-import * as actionTypes from '../../store/actions';
+import * as burgerBuilderActions from '../../store/actions/index';
 
 
 class BurgerBuilder extends Component {
     state = {
         purchasing: false,
-        error: false,
-        loading: false,
     }
 
     componentDidMount() {
-        // axios.get('https://react-my-burger-d4cba.firebaseio.com/ingredients.json')
-        //     .then(response => {
-        //         this.setState({ingredients: response.data})
-        //     })
-        //     .catch(error => {
-        //         this.setState({error: true})
-        //     });
     }
 
     updatePurchaseState(ingredients) {
@@ -78,9 +68,6 @@ class BurgerBuilder extends Component {
                                          purchaseContinue={this.purchaseContinueHandler}
                                          price={this.props.price}/>
         }
-        if (this.state.loading) {
-            orderSummary = <Spinner/>;
-        }
 
         return (
             <Auxiliary>
@@ -102,9 +89,9 @@ const mapStateToPops = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingName}),
-        onIngredientRemoved: (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName})
+        onIngredientAdded: (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
+        onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName))
     }
 }
 
-export default connect(mapStateToPops, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axios));
+export default connect(mapStateToPops, mapDispatchToProps)(withErrorHandler(BurgerBuilder));
