@@ -1,6 +1,6 @@
 {
-  "name": "burger_builder",
-  "homepage": "https://OleksandrDashevskyi.github.io/burger_builder",
+  "name": "burger_builder_react_app",
+  "homepage": "https://OleksandrDashevskyi.github.io/burger_builder_react_app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
