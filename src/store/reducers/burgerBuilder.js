@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionsTypes';
+import { updateObject } from '../utility';
 
 const initialState = {
   ingredients: null,
@@ -17,23 +18,22 @@ const INGREDIENT_PRICES = {
 const burgerBuilder = (state = initialState, action) => {
   switch (action.type) {
   case actionTypes.ADD_INGREDIENT:
-    return {
-      ...state,
-      ingredients: {
-        ...state.ingredients,
-        [action.ingredientName]: state.ingredients[action.ingredientName] + 1,
-      },
+    const updatedIngredient = { [action.ingredientName]: state.ingredients[action.ingredientName] + 1 };
+    const updatedIngredients = updateObject(state.ingredients, updatedIngredient);
+    const updatedState = {
+      ingredients: updatedIngredients,
       totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
     };
+    return updateObject(state, updatedState);
+
   case actionTypes.REMOVE_INGREDIENT:
-    return {
-      ...state,
-      ingredients: {
-        ...state.ingredients,
-        [action.ingredientName]: state.ingredients[action.ingredientName] - 1,
-      },
-      totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+    const updatedIng = { [action.ingredientName]: state.ingredients[action.ingredientName] - 1 };
+    const updatedIngs = updateObject(state.ingredients, updatedIng);
+    const updatedSt = {
+      ingredients: updatedIngs,
+      totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
     };
+    return updateObject(state, updatedState);
   case actionTypes.SET_INGREDIENTS:
     return {
       ...state,
@@ -41,16 +41,16 @@ const burgerBuilder = (state = initialState, action) => {
         salad: action.ingredients.salad,
         bacon: action.ingredients.bacon,
         cheese: action.ingredients.cheese,
-        meat: action.ingredients.meat
+        meat: action.ingredients.meat,
       },
       error: false,
-      totalPrice: 4
+      totalPrice: 4,
     };
   case actionTypes.FETCH_INGREDIENT_FAILED:
     return {
       ...state,
-      error: true
-    }
+      error: true,
+    };
   default:
     return state;
   }
