@@ -106,12 +106,15 @@ class ContactData extends Component {
       orderData: formData,
     };
 
-    this.props.onOrderBurger(order);
+    this.props.onOrderBurger(order, this.props.token);
     
   };
 
   checkValidity(value, rules) {
     let isValid = true;
+    if (!rules) {
+      return true;
+    }
 
     if (rules.required) {
       isValid = value.trim() !== '' && isValid;
@@ -171,7 +174,7 @@ class ContactData extends Component {
             key={formElement.id}
             elementType={formElement.config.elementType}
             elementConfig={formElement.config.elementConfig}
-            onChange={formElement.config.value}
+            defaultValue={formElement.config.value}
             changed={(event) => this.inputChangedHandler(event, formElement.id)}
             invalid={!formElement.config.valid}
             shouldValidate={formElement.config.validation}
@@ -198,13 +201,14 @@ const mapStateToProps = state => {
   return {
     ings: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
-    loading: state.order.loading
+    loading: state.order.loading,
+    token: state.auth.token
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData)),
+    onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token)),
   };
 };
 

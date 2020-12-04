@@ -27,8 +27,7 @@
 }
 
 .Invalid {
-    border: 1px solid #ff7f7f;
-    background-color: #fda195;
+   color: red;
 }
 
 .ValidationError {
